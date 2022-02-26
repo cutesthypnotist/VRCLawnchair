@@ -1,0 +1,87 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:VRCLawnchair.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:sg="clr-namespace:AvaloniaSpacedGrid;assembly=AvaloniaSpacedGrid"
+        xmlns:wpf="clr-namespace:Material.Styles.Assists;assembly=Material.Styles"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="VRCLawnchair.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        CanResize="False"
+        SystemDecorations="BorderOnly"
+        ExtendClientAreaToDecorationsHint="True"        
+        Width="1200"
+        Height="1000"
+        Title="VRCLawnchair">
+
+    <Design.DataContext>
+        <vm:MainWindowViewModel/>
+    </Design.DataContext>
+    
+
+	<Grid RowDefinitions="*, 120, 120, 120">
+		<sg:SpacedGrid Name="SpacedGrid" RowSpacing="36" ColumnSpacing="36">
+			<sg:SpacedGrid.RowDefinitions>
+				<RowDefinition />
+				<RowDefinition />
+				<RowDefinition />
+			</sg:SpacedGrid.RowDefinitions>
+
+			<sg:SpacedGrid.ColumnDefinitions>
+				<ColumnDefinition />
+				<ColumnDefinition />
+				<ColumnDefinition />
+				<ColumnDefinition />
+			</sg:SpacedGrid.ColumnDefinitions>
+
+			<Button Classes="Outline Accent" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Options"/>
+			<ToggleButton Classes="Outline Accent" Grid.Row="1" Grid.Column="0" Content="No VR" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsChecked="{Binding Options.noVR}"/>
+			<ToggleButton Classes="Outline Accent" Grid.Row="2" Grid.Column="0" Content="Legacy FBT Calibration" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" IsChecked="{Binding Options.legacyfbt}"/>
+
+			<ToggleButton Classes="Outline Accent" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Content="Watch Worlds" VerticalAlignment="Stretch" IsChecked="{Binding Options.worlds}"/>
+			<ToggleButton Classes="Outline Accent" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Stretch" Content="Watch Avatars" VerticalAlignment="Stretch" IsChecked="{Binding Options.avatars}"/>
+
+			<ToggleButton Classes="Outline Accent" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Stretch" Content="Enable Udon Debug Logging" VerticalAlignment="Stretch" IsChecked="{Binding Options.udon}"/>
+			<ToggleButton Classes="Outline Accent" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Stretch" Content="Fullscreen" VerticalAlignment="Stretch" IsChecked="{Binding Options.fullscreen}"/>
+
+			<ToggleButton Classes="Outline Accent" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Stretch" Content="Enable SDK Log Levels" VerticalAlignment="Stretch" IsChecked="{Binding Options.sdklevels}"/>
+			<ToggleButton Classes="Outline Accent" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Stretch" Content="Enable Debug GUI" VerticalAlignment="Stretch" IsChecked="{Binding Options.debuggui}"/>
+		</sg:SpacedGrid>
+
+		<StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<TextBlock Text="Width:" Margin="0 0 10 0" VerticalAlignment="Center" />
+			<Slider Classes="Modern Discrete Accent Ticks" Value="1920" Minimum="0" Maximum="4096"
+			        TickFrequency="1" IsSnapToTickEnabled="True"
+			        Width="200"
+			/>
+			<TextBlock Text="Height:" Margin="30 0 10 0" VerticalAlignment="Center" />
+			<Slider Classes="Modern Discrete Accent Ticks" Value="1080" Minimum="0" Maximum="2160"
+			        TickFrequency="1" IsSnapToTickEnabled="True"
+			        Width="200"
+			/>
+			<TextBlock Text="Profile:" Margin="30 0 10 0" VerticalAlignment="Center" />
+			<Slider Classes="Modern Discrete Accent Ticks" Value="{Binding Options.profile}" Minimum="0" Maximum="5"
+			        TickFrequency="1" IsSnapToTickEnabled="True"
+			        Width="200"
+			        PropertyChanged="ProfileSliderPropertyChanged"
+			/>
+			<TextBlock Name="textBlock_Profile" Text="{Binding Options.profile}" Width="30" Margin="10 0 0 0" VerticalAlignment="Center" />
+			<TextBlock Text="FPS:" Margin="30 0 10 0" VerticalAlignment="Center" />
+			<Slider Classes="Modern Discrete Accent Ticks" Value="{Binding Options.fps}" Minimum="0" Maximum="144"
+			        TickFrequency="1" IsSnapToTickEnabled="True"
+			        Width="200"
+			        PropertyChanged="FPSSliderPropertyChanged" 
+			/>				
+			
+			<TextBlock Name="textBlock_FPS" Text="{Binding Options.fps}" Width="30" Margin="10 0 0 0" VerticalAlignment="Center" />
+		</StackPanel>
+		<StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center">
+			<TextBox Width="200" UseFloatingWatermark="True" wpf:TextFieldAssist.Label="Midi:" />
+			<TextBox Width="200" UseFloatingWatermark="True" wpf:TextFieldAssist.Label="OSC:" />
+		</StackPanel>
+		<Button Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Content="Launch"/>	
+	</Grid>    
+    
+
+</Window>
